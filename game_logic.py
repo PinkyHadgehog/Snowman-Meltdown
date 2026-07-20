@@ -42,10 +42,17 @@ def play_game():
 
         guess = input("Guess a letter: ").lower()
 
+        # Only allow one letter
+        if len(guess) != 1:
+            print("Please enter a single letter.")
+            continue
+
+        # Prevent duplicate guesses
         if guess in guessed_letters:
             print("You already guessed that letter.")
             continue
 
+        # Correct guess
         if guess in secret_word:
             guessed_letters.append(guess)
             print("Correct guess!")
@@ -53,17 +60,20 @@ def play_game():
             mistakes += 1
             print("Wrong guess!")
 
+        # Check if the whole word has been guessed
         word_is_complete = True
 
         for letter in secret_word:
             if letter not in guessed_letters:
                 word_is_complete = False
+                break
 
         if word_is_complete:
             display_game_state(mistakes, secret_word, guessed_letters)
-            print("You saved the snowman!")
+            print("Congratulations! You saved the snowman!")
             return
 
+    # Game over
     display_game_state(mistakes, secret_word, guessed_letters)
-    print("The snowman melted!")
+    print("Game over! The snowman melted!")
     print("The secret word was:", secret_word)
