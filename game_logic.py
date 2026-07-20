@@ -13,7 +13,7 @@ def get_random_word():
 
 
 def display_game_state(mistakes, secret_word, guessed_letters):
-    """Displays the snowman and the current word state."""
+    """Displays the current snowman stage and the guessed word."""
 
     print(STAGES[mistakes])
 
@@ -30,6 +30,7 @@ def display_game_state(mistakes, secret_word, guessed_letters):
 
 
 def play_game():
+    """Runs one complete game of Snowman Meltdown."""
     secret_word = get_random_word()
     guessed_letters = []
     mistakes = 0
