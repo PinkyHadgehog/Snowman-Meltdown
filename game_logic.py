@@ -35,32 +35,34 @@ def play_game():
     mistakes = 0
     maximum_mistakes = len(STAGES) - 1
 
-    print("Welcome to Snowman Meltdown!")
+    print("\nWelcome to Snowman Meltdown!")
+    print("============================")
 
     while mistakes < maximum_mistakes:
         display_game_state(mistakes, secret_word, guessed_letters)
 
-        guess = input("Guess a letter: ").lower()
+        if guessed_letters:
+            print("Guessed letters:", ", ".join(guessed_letters))
 
-        # Only allow one letter
-        if len(guess) != 1:
-            print("Please enter a single letter.")
+        guess = input("Guess a letter: ").lower().strip()
+
+        # Accept only one alphabetical character
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter exactly one letter.")
             continue
 
-        # Prevent duplicate guesses
         if guess in guessed_letters:
             print("You already guessed that letter.")
             continue
 
-        # Correct guess
+        guessed_letters.append(guess)
+
         if guess in secret_word:
-            guessed_letters.append(guess)
             print("Correct guess!")
         else:
             mistakes += 1
             print("Wrong guess!")
 
-        # Check if the whole word has been guessed
         word_is_complete = True
 
         for letter in secret_word:
@@ -73,7 +75,6 @@ def play_game():
             print("Congratulations! You saved the snowman!")
             return
 
-    # Game over
     display_game_state(mistakes, secret_word, guessed_letters)
     print("Game over! The snowman melted!")
     print("The secret word was:", secret_word)
